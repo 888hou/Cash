@@ -91,6 +91,7 @@ export default {
     },
     methods: {
       submitForm(formName){
+        console.log(formName);
         this.$refs[formName].validate((valid) =>{
           if(valid) {
             this.$axios.post("/api/users/register",this.registerUser)
@@ -102,6 +103,7 @@ export default {
               });
             });
             this.$router.push('/login');
+            return true;
           }else{
             console.log('valid false');
             return false;
