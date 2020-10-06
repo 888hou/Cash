@@ -39,10 +39,9 @@ export default {
       var validatePassword = (rule, value, callback) => {
         if (value=== ''){
           callback(new Error('请输入密码'));
+        }else if (value !== this.registerUser.password2){
+          callback(new Error('请确认两次输入密码是否一致'));
         }else{
-          if (this.registerUser.password2 !== '') {
-            this.$refs.registerForm.validateField('password2');
-          }
           callback();
         }
       };
@@ -90,17 +89,7 @@ export default {
       }
     },
     methods: {
-      submitForm(formName){
-        console.log(formName);
-        this.$refs[formName].validate((valid) =>{
-          if(valid) {
-            return true;
-          }else{
-            console.log('valid false');
-            return false;
-          }
-        });
-      }
+
     },
 };
 </script>

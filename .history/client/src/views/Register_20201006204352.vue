@@ -36,17 +36,7 @@ export default {
     name: "register",
     compoments: [],
     data(){
-      var validatePassword = (rule, value, callback) => {
-        if (value=== ''){
-          callback(new Error('请输入密码'));
-        }else{
-          if (this.registerUser.password2 !== '') {
-            this.$refs.registerForm.validateField('password2');
-          }
-          callback();
-        }
-      };
-      var validatePassword2 = (rule, value, callback) => {
+      var validatePass2 = (rule, value, callback) => {
         if (value=== ''){
           callback(new Error('请再次输入密码'));
         }else if (value !== this.registerUser.password){
@@ -76,31 +66,17 @@ export default {
             required: true,message :"密码不能为空",trigger:"blur"
           },{
             min:6,max:32,message:"长度要在6-32个字符之间",trigger:"blur"
-          },{
-            validator : validatePassword,trigger:"blur"
           }],
           password2:[{
             required: true,message :"密码不能为空",trigger:"blur"
           },{
             min:6,max:32,message:"长度要在6-32个字符之间",trigger:"blur"
-          },{
-            validator : validatePassword2,trigger:"blur"
           }],
         }
       }
     },
     methods: {
-      submitForm(formName){
-        console.log(formName);
-        this.$refs[formName].validate((valid) =>{
-          if(valid) {
-            return true;
-          }else{
-            console.log('valid false');
-            return false;
-          }
-        });
-      }
+
     },
 };
 </script>
