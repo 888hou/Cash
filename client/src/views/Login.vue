@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import jwt_decode from 'jwt-decode';
 export default {
     name: "Login",
     compoments: [],
@@ -50,9 +51,15 @@ export default {
           if(valid) {
             this.$axios.post("/api/users/login",this.loginUser)
             .then((res) => {
-              console.log(res);
+              //console.log(res);
               const {token} = res.data;
               localStorage.setItem("eleToken",token);
+              //解析token
+              const decoded = jwt_decode(token);
+              //console.log(decoded);
+              //token 存储到vuex
+              this.$store.dispatch("setAuthenticated",!this.isEmpty(decoded));
+              this.$store.dispatch("setUser",decoded);
               this.$router.push('/index');
               //注册成功
               // this.$message({
@@ -66,6 +73,14 @@ export default {
             return false;
           }
         });
+      },
+      isEmpty(value) {
+        return (
+          value === undefined || 
+          value === null ||
+          (typeof value === "object" && Object.keys(value).length === 0) ||
+          (typeof value === "string" && value.trim().length === 0)
+        );
       }
     },
 };
