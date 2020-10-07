@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { Loading,Message } from 'element-ui';
-import router from './router';
 
 let loading;
 function stringLoading(){
@@ -35,15 +34,6 @@ axios.interceptors.response.use(response => {
     //错误提醒
     endLoading();
     Message.error(error.response.data);
-    //获取错误状态码
-    const { status } = error.response;
-    if ( status == 401 ){
-        Message.error('Token失效，请重新登录');
-        //清楚Token
-        localStorage.removeItem('eleToken');
-        //跳转到登录页面；
-        router.push('/login');
-    }
     return Promise.reject(error);
 });
 

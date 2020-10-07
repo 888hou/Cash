@@ -39,12 +39,7 @@ const router = new Router({
 
 //路由守卫
 router.beforeEach((to, from, next) => {
-  const isLogin = localStorage.eleToken ? true : false;
-  if(to.path == "/login" || to.path == "/register") {
-    next();
-  }else{
-    isLogin ? next() : next("/login");
-  }
+  const isLogin = localStorage.getItem('eleToken');
 });
 
 export default router;

@@ -42,7 +42,7 @@ axios.interceptors.response.use(response => {
         //清楚Token
         localStorage.removeItem('eleToken');
         //跳转到登录页面；
-        router.push('/login');
+
     }
     return Promise.reject(error);
 });
