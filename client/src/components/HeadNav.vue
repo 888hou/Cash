@@ -3,7 +3,7 @@
         <el-row>
             <el-col :span="6" class="logo-container">
                 <img src="../assets/logo.png" class="logo">
-                <span class="title">在线后台管理系统</span>
+                <span class="title">客户服务中心</span>
             </el-col>
             <el-col :span="6" class="user">
                 <div class="userinfo">

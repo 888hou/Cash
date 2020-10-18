@@ -18,7 +18,7 @@
                         <i :class="'fa fa-margin '+ item.icon"></i>
                         {{item.name}}
                     </template>
-                    <router-link v-for="(citem,cindex) in item.children" :to="citem.path" :key="cindex">
+                    <router-link @click.native="flushCom" v-for="(citem,cindex) in item.children" :to="citem.path" :key="cindex">
                         <el-menu-item :index="citem.path">
                             <span slot="title">{{citem.name}}</span>
                         </el-menu-item>
@@ -42,7 +42,7 @@ export default {
                     path:"suggestion",
                     children:[
                         {
-                            path:"suggestionlist",
+                            path:"/suggestionlist",
                             name:"反馈列表"
                         }
                     ]
@@ -59,12 +59,23 @@ export default {
                 //     ]
                 // },
                 {
-                    icon:"fa-money",
+                    icon:"fa-question",
+                    name:"调查问卷",
+                    path:"questionnaire",
+                    children:[
+                        {
+                            path:"/questionnaire",
+                            name:"问卷管理"
+                        }
+                    ]
+                },
+                {
+                    icon:"fa-user",
                     name:"会员管理",
                     path:"wusers",
                     children:[
                         {
-                            path:"userlist",
+                            path:"/userlist",
                             name:"会员列表"
                         }
                     ]
@@ -74,13 +85,20 @@ export default {
                     name:"信息管理",
                     path:'info',
                     children:[{
-                        path:"infoshow",
+                        path:"/infoshow",
                         name:"个人信息"
                     }]
                 }
             ]
         }
-    }
+    },
+    methods:{
+　　　　flushCom:function(){
+　　　　　　//router是路由实例,例如:var router = new Router({})
+　　　　　　//router.go(n)是路由的一个方法，意思是在history记录中前进或者后退多少步，0就表示还是当前，类似window.history.go(n)
+　　　　　　//this.$router.go(0);  
+　　　　}
+　　}
 }
 </script>
 
