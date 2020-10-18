@@ -37,16 +37,39 @@ export default {
         return {
             items:[
                 {
-                    icon:"fa-money",
-                    name:"资金管理",
-                    path:"fund",
+                    icon:"fa-info",
+                    name:"反馈管理",
+                    path:"suggestion",
                     children:[
                         {
-                            path:"fundList",
-                            name:"资金流水"
+                            path:"suggestionlist",
+                            name:"反馈列表"
                         }
                     ]
-                },{
+                },
+                // {
+                //     icon:"fa-money",
+                //     name:"资金管理",
+                //     path:"fund",
+                //     children:[
+                //         {
+                //             path:"fundList",
+                //             name:"资金流水"
+                //         }
+                //     ]
+                // },
+                {
+                    icon:"fa-money",
+                    name:"会员管理",
+                    path:"wusers",
+                    children:[
+                        {
+                            path:"userlist",
+                            name:"会员列表"
+                        }
+                    ]
+                },
+                {
                     icon:"fa-asterisk",
                     name:"信息管理",
                     path:'info',
