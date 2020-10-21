@@ -184,16 +184,10 @@ export default {
                 //console.log(res.data);
                 //开始处理数据
                 var tempData = res.data;
-                var returnData = [];
                 tempData.forEach((item,index) => {
                     item.questions.forEach((question,qindex) => {
                         tempData[index][question.name] = question.input
                     })
-                    tempData[index]['时间'] = item.date
-                    tempData[index]['ID'] = item._id
-                    tempData[index]['姓名'] = item.name
-                    tempData[index]['电话'] = item.mobile
-                    tempData[index]['表单'] = item.qname
                 })
                 console.log(tempData);
                 this.allTableData = res.data;

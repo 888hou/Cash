@@ -13,13 +13,12 @@
                 <el-button type="primary" size="small" icon="search" @click="handleSearch()">筛选</el-button>
             </el-form-item>
             <el-form-item class="btnRight">
-                <el-button type="primary" size="small" icon="view" v-if="user.identity == 'manager'" @click="onExport()">导出</el-button>
+                <el-button type="primary" size="small" icon="view" v-if="user.identity == 'manager'" @click="onAdd()">添加</el-button>
             </el-form-item>
         </el-form>
     </div>
     <div class="table_container">
         <el-table
-        id="out-table"
         v-if="tableData.length > 0"
         :data="tableData"
         max-height="450"
@@ -69,6 +68,14 @@
                 label="问卷"
                 align='center'
                 width="200">
+            </el-table-column>
+            <el-table-column v-for="(answer, index) in data.questions" :key="index"
+                prop="answer"
+                :label="answer.name"
+                align='center'
+                width="200"
+            >
+                
             </el-table-column>
             <!-- <el-table-column
                 v-for="(answer, index) in questions"
@@ -129,9 +136,6 @@
 </template>
 
 <script>
-// 引入导出Excel表格依赖
-import FileSaver from "file-saver";
-import XLSX from "xlsx";
 export default {
     name: "questionnairelist",
     data(){
@@ -182,20 +186,6 @@ export default {
             this.$axios.get("/api/questionnaire/answerlist/"+this.$route.params.id)
             .then(res => {
                 //console.log(res.data);
-                //开始处理数据
-                var tempData = res.data;
-                var returnData = [];
-                tempData.forEach((item,index) => {
-                    item.questions.forEach((question,qindex) => {
-                        tempData[index][question.name] = question.input
-                    })
-                    tempData[index]['时间'] = item.date
-                    tempData[index]['ID'] = item._id
-                    tempData[index]['姓名'] = item.name
-                    tempData[index]['电话'] = item.mobile
-                    tempData[index]['表单'] = item.qname
-                })
-                console.log(tempData);
                 this.allTableData = res.data;
                 this.filterTableData = res.data;
                 //设置分页数据
@@ -246,30 +236,21 @@ export default {
                 this.getProfile();
             });
         },
-        //定义导出Excel表格事件
-        onExport() {
-            /* 从表生成工作簿对象 */
-            var wb = XLSX.utils.table_to_book(document.querySelector("#out-table"));
-            /* 获取二进制字符串作为输出 */
-            var wbout = XLSX.write(wb, {
-                bookType: "xlsx",
-                bookSST: true,
-                type: "array"
-            });
-            try {
-                FileSaver.saveAs(
-                //Blob 对象表示一个不可变、原始数据的类文件对象。
-                //Blob 表示的不一定是JavaScript原生格式的数据。
-                //File 接口基于Blob，继承了 blob 的功能并将其扩展使其支持用户系统上的文件。
-                //返回一个新创建的 Blob 对象，其内容由参数中给定的数组串联组成。
-                new Blob([wbout], { type: "application/octet-stream" }),
-                //设置导出文件名称
-                "导出数据.xlsx"
-                );
-            } catch (e) {
-                if (typeof console !== "undefined") console.log(e, wbout);
+        onAdd(){
+            this.dialog = {
+                show :true,
+                title:"添加",
+                option:"add"
+            };
+            this.formData = {
+                name :"",
+                status : "",
+                type : "",
+                begindate: "",
+                enddate : "",
+                remark: "",
+                id:""
             }
-            return wbout;
         },
         handleSizeChange(page_size){
             //切换size

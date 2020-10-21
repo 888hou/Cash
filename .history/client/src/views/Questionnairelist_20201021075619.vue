@@ -187,15 +187,15 @@ export default {
                 var returnData = [];
                 tempData.forEach((item,index) => {
                     item.questions.forEach((question,qindex) => {
-                        tempData[index][question.name] = question.input
+                        returnData[index][question.name] = question.input
                     })
-                    tempData[index]['时间'] = item.date
-                    tempData[index]['ID'] = item._id
-                    tempData[index]['姓名'] = item.name
-                    tempData[index]['电话'] = item.mobile
-                    tempData[index]['表单'] = item.qname
+                    returnData[index]['时间'] = item.date
+                    returnData[index]['ID'] = item._id
+                    returnData[index]['姓名'] = item.name
+                    returnData[index]['电话'] = item.mobile
+                    returnData[index]['表单'] = item.qname
                 })
-                console.log(tempData);
+                console.log(returnData);
                 this.allTableData = res.data;
                 this.filterTableData = res.data;
                 //设置分页数据
