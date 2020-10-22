@@ -71,10 +71,10 @@
             </el-table-column>
 
 
-            <el-table-column  v-for="(item,index) in tableHead" :label="item.name" :key="index" :property="item.name"
+            <el-table-column  v-for="(item,index) in tableHead.questions" :label="item.name" :key="index" :property="item.name"
                     width="180">
                 <template slot-scope="scope">
-                    {{scope.row[scope.column.property]}}
+                    <el-input  v-model="scope.row[scope.column.property]" ></el-input>
                 </template>
             </el-table-column>
 
@@ -187,7 +187,7 @@ export default {
     methods:{
         
         getProfile(){
-            this.$axios.get("/api/question/"+this.$route.params.id)
+            this.$axios.get("/api/questionnaire/"+this.$route.params.id)
             .then(res => {
                 //console.log(res.data);
                 this.tableHead = res.data; 

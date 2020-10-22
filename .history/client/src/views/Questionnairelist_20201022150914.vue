@@ -74,7 +74,7 @@
             <el-table-column  v-for="(item,index) in tableHead" :label="item.name" :key="index" :property="item.name"
                     width="180">
                 <template slot-scope="scope">
-                    {{scope.row[scope.column.property]}}
+                    <el-input  v-model="scope.row[scope.column.property]" ></el-input>
                 </template>
             </el-table-column>
 

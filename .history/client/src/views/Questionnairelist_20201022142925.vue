@@ -25,15 +25,16 @@
         max-height="450"
         border
         style="width: 100%">
-            <!-- <el-table-column type="expand">
+            <el-table-column type="expand">
             <template Scoped slot-scope="props">
                 <el-form label-position="left"  class="answeritem">
                 <el-form-item v-for="(answer, index) in props.row.questions" :key="index" :label="answer.order +'、'+answer.name">
+                    <!-- <p class="answer">{{ answer.order }}、{{ answer.name }}</p> -->
                     <span class="answer">{{ answer.input }}</span>
                 </el-form-item>
                 </el-form>
             </template>
-            </el-table-column> -->
+            </el-table-column>
             <el-table-column
                 type="index"
                 label="序号"
@@ -69,15 +70,14 @@
                 align='center'
                 width="200">
             </el-table-column>
-
-
-            <el-table-column  v-for="(item,index) in tableHead" :label="item.name" :key="index" :property="item.name"
-                    width="180">
-                <template slot-scope="scope">
-                    {{scope.row[scope.column.property]}}
-                </template>
-            </el-table-column>
-
+            <template slot-scope="rows">
+                <el-table-column  v-for="(item,index) in rows.row" :label="item.name" :key="index" :property="item.input"
+                        width="180">
+                    <template slot-scope="scope">
+                        <el-input  v-model="scope.column.property" ></el-input>
+                    </template>
+                </el-table-column>
+            </template>
             <!-- <el-table-column
                 v-for="(answer, index) in questions"
                 :key="index"
@@ -153,10 +153,9 @@ export default {
                 page_index: 1,//当前页
                 total:0,//总数
                 page_size: 50,//默认显示多少条
-                page_sizes:[15,25,50,100,200,2000,10000], //每页显示多少条
+                page_sizes:[15,25,50,100], //每页显示多少条
                 layout:"total,sizes,prev,pager,next,jumper" //翻页属性
             },
-            tableHead:[],
             tableData:[],
             allTableData:[],
             dialog:{
@@ -187,12 +186,6 @@ export default {
     methods:{
         
         getProfile(){
-            this.$axios.get("/api/question/"+this.$route.params.id)
-            .then(res => {
-                //console.log(res.data);
-                this.tableHead = res.data; 
-                console.log(this.tableHead);
-            })
             //获取表格数据
             this.$axios.get("/api/questionnaire/answerlist/"+this.$route.params.id)
             .then(res => {
@@ -215,7 +208,7 @@ export default {
                 this.filterTableData = res.data;
                 //设置分页数据
                 this.setPaginations();
-                //
+                
             })
             .catch(err => console.log(err));
         },
